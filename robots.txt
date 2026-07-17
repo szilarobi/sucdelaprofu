@@ -1,0 +1,5 @@
+User-agent: *
+
+Allow: /
+
+Sitemap: https://sucdelaprofu.ro/sitemap.xml
