@@ -1996,3 +1996,80 @@ font-size:26px;
     }
 
 }
+
+
+/* ==========================================
+   MENIU MOBIL
+========================================== */
+
+#menuToggle{
+    display:none;
+    background:none;
+    border:none;
+    font-size:32px;
+    cursor:pointer;
+    color:#1b5e20;
+}
+
+@media (max-width:900px){
+
+    #menuToggle{
+        display:block;
+        z-index:10001;
+    }
+
+    #nav{
+
+        position:fixed;
+
+        top:80px;
+
+        left:-100%;
+
+        width:100%;
+
+        background:#fff;
+
+        display:flex;
+
+        flex-direction:column;
+
+        align-items:center;
+
+        gap:20px;
+
+        padding:30px 0;
+
+        transition:left .3s ease;
+
+        box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+        z-index:9999;
+
+    }
+
+    #nav.active{
+
+        left:0;
+
+    }
+
+    #nav a{
+
+        font-size:20px;
+
+        text-decoration:none;
+
+        color:#1b5e20;
+
+        font-weight:600;
+
+    }
+
+    .headerActions{
+
+        display:none;
+
+    }
+
+}
