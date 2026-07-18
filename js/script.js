@@ -418,3 +418,65 @@ document.querySelectorAll("input, textarea").forEach(camp => {
 });
 
 updateCart();
+
+
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker
+            .register("./sw.js")
+            .then(function () {
+                console.log("PWA Service Worker înregistrat.");
+            })
+            .catch(function (error) {
+                console.error(
+                    "Service Worker nu a putut fi înregistrat:",
+                    error
+                );
+            });
+    });
+}
+
+// ==============================
+// BUTON INSTALARE PWA
+// ==============================
+
+let deferredInstallPrompt = null;
+const installAppButton = document.getElementById("installAppButton");
+
+window.addEventListener("beforeinstallprompt", function (event) {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+
+    if (installAppButton) {
+        installAppButton.hidden = false;
+    }
+});
+
+if (installAppButton) {
+    installAppButton.addEventListener("click", async function () {
+        if (!deferredInstallPrompt) {
+            return;
+        }
+
+        installAppButton.disabled = true;
+        deferredInstallPrompt.prompt();
+
+        try {
+            await deferredInstallPrompt.userChoice;
+        } finally {
+            deferredInstallPrompt = null;
+            installAppButton.hidden = true;
+            installAppButton.disabled = false;
+        }
+    });
+}
+
+window.addEventListener("appinstalled", function () {
+    deferredInstallPrompt = null;
+
+    if (installAppButton) {
+        installAppButton.hidden = true;
+    }
+
+    console.log("Aplicația Suc de la Profu' a fost instalată.");
+});

@@ -37,7 +37,7 @@ content="website">
 type="image/png"
 href="assets/logo2.png">
 
- <link rel="stylesheet" href="css/style.css?v=5">
+ <link rel="stylesheet" href="css/style.css?v=6">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -606,6 +606,11 @@ class="floatingPhone">
     ↑
 </button>
 
+<button id="installAppButton" class="installAppButton" type="button" hidden>
+    <i class="fa-solid fa-download" aria-hidden="true"></i>
+    <span>Instalează aplicația</span>
+</button>
+
 
 <div id="floatingCart">
 
@@ -660,18 +665,6 @@ class="floatingPhone">
 </div>
 
 
-    <script src="js/script.js?v=10"></script>
-	
-	<script>
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js")
-            .then(reg => console.log("Service Worker înregistrat", reg))
-            .catch(err => console.error("Eroare Service Worker:", err));
-    });
-}
-</script>
-	
-	
+    <script src="js/script.js?v=11"></script>
 </body>
 </html>
