@@ -2332,3 +2332,59 @@ background:#2e7d32;
         width: 100%;
     }
 }
+
+
+/* ===========================
+   V7.3 — ECRAN DE PORNIRE PWA
+   Afișează doar logo-ul la deschiderea aplicației instalate.
+=========================== */
+
+.appSplash {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .35s ease, visibility .35s ease;
+}
+
+.pwa-launch .appSplash {
+    display: flex;
+}
+
+.appSplash img {
+    width: min(68vw, 320px);
+    height: auto;
+    max-height: 58vh;
+    object-fit: contain;
+    animation: splashLogoIn .55s ease-out both;
+}
+
+.appSplash.isHidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+@keyframes splashLogoIn {
+    from {
+        opacity: 0;
+        transform: scale(.88);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .appSplash,
+    .appSplash img {
+        animation: none;
+        transition: none;
+    }
+}

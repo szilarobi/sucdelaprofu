@@ -1,4 +1,40 @@
 // ==============================
+// V7.3 — SPLASH SCREEN PWA
+// ==============================
+
+(function () {
+    const splash = document.getElementById("appSplash");
+
+    if (!splash || !document.documentElement.classList.contains("pwa-launch")) {
+        return;
+    }
+
+    const startedAt = performance.now();
+    const minimumDisplayTime = 1200;
+
+    function closeSplash() {
+        const elapsed = performance.now() - startedAt;
+        const remaining = Math.max(0, minimumDisplayTime - elapsed);
+
+        window.setTimeout(function () {
+            splash.classList.add("isHidden");
+            document.documentElement.classList.remove("pwa-launch");
+
+            window.setTimeout(function () {
+                splash.remove();
+            }, 400);
+        }, remaining);
+    }
+
+    if (document.readyState === "complete") {
+        closeSplash();
+    } else {
+        window.addEventListener("load", closeSplash, { once: true });
+        window.setTimeout(closeSplash, 2600);
+    }
+})();
+
+// ==============================
 // SUC DE LA PROFU' V4.0.1
 // ==============================
 

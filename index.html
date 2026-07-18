@@ -37,7 +37,7 @@ content="website">
 type="image/png"
 href="assets/logo2.png">
 
- <link rel="stylesheet" href="css/style.css?v=6">
+ <link rel="stylesheet" href="css/style.css?v=7">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -57,9 +57,25 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 
 
+<script>
+(function () {
+    const standalone =
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.navigator.standalone === true;
+
+    if (standalone) {
+        document.documentElement.classList.add("pwa-launch");
+    }
+})();
+</script>
+
 </head>
 
 <body>
+
+<div id="appSplash" class="appSplash" aria-hidden="true">
+    <img src="assets/logo.png" alt="">
+</div>
 
 <header id="header">
 
@@ -174,7 +190,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
          100% NATURAL
     </div>
 
-        <img src="assets/mere.jpg">
+        <img loading="lazy" decoding="async" src="assets/mere.jpg">
 
 
         <h3>Suc de mere 100%</h3>
@@ -209,7 +225,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
          FAVORITUL CLIENȚILOR
     </div>
 
-        <img src="assets/sfecla.jpg">
+        <img loading="lazy" decoding="async" src="assets/sfecla.jpg">
 
 
         <h3>Suc de mere cu sfeclă roșie (15%)</h3>
@@ -430,21 +446,21 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
     <div class="gallery">
 
-        <img src="assets/gallery/livada.jpg" alt="Livada">
+        <img loading="lazy" decoding="async" src="assets/gallery/livada.jpg" alt="Livada">
 
-        <img src="assets/gallery/mere.jpg" alt="Mere">
+        <img loading="lazy" decoding="async" src="assets/gallery/mere.jpg" alt="Mere">
 
-        <img src="assets/gallery/presa.jpg" alt="Presa">
+        <img loading="lazy" decoding="async" src="assets/gallery/presa.jpg" alt="Presa">
 
-	<img src="assets/gallery/pasteurizare.jpg" alt="Pasteurizare">
+	<img loading="lazy" decoding="async" src="assets/gallery/pasteurizare.jpg" alt="Pasteurizare">
 
-	<img src="assets/gallery/poza1.jpg" alt="Poza1">
+	<img loading="lazy" decoding="async" src="assets/gallery/poza1.jpg" alt="Poza1">
 	
-	<img src="assets/gallery/poza2.jpg" alt="Poza2">
+	<img loading="lazy" decoding="async" src="assets/gallery/poza2.jpg" alt="Poza2">
 	
-        <img src="assets/gallery/baginbox.jpg" alt="Bag in Box">
+        <img loading="lazy" decoding="async" src="assets/gallery/baginbox.jpg" alt="Bag in Box">
 
-        <img src="assets/gallery/produse.jpg" alt="Produse">
+        <img loading="lazy" decoding="async" src="assets/gallery/produse.jpg" alt="Produse">
 
     </div>
 
@@ -675,6 +691,6 @@ class="floatingPhone">
 </div>
 
 
-    <script src="js/script.js?v=12"></script>
+    <script src="js/script.js?v=14"></script>
 </body>
 </html>
