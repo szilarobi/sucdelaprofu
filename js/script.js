@@ -335,6 +335,27 @@ document.querySelectorAll("#nav a").forEach(link => {
 
 });
 
+
+
+// Închide meniul dacă utilizatorul apasă în afara lui
+document.addEventListener("click", function(event){
+
+    const clickInMenu = nav.contains(event.target);
+    const clickOnButton = menuToggle.contains(event.target);
+
+    if(nav.classList.contains("active") && !clickInMenu && !clickOnButton){
+
+        nav.classList.remove("active");
+        menuToggle.innerHTML = "☰";
+
+    }
+
+});
+
+
+
+
+
 /* HEADER */
 
 const header=document.getElementById("header");
