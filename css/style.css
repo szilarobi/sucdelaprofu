@@ -2388,3 +2388,29 @@ background:#2e7d32;
         transition: none;
     }
 }
+
+
+/* V7.3.1 — corecție buton Sus / instalare pe mobil */
+#backToTop{
+    z-index:10020;
+    pointer-events:auto;
+    touch-action:manipulation;
+}
+
+.installAppButton[hidden],
+html.pwa-standalone .installAppButton{
+    display:none !important;
+    pointer-events:none !important;
+}
+
+.appSplash.isHidden{
+    pointer-events:none !important;
+}
+
+@media (max-width:900px){
+    .installAppButton{
+        left:80px;
+        bottom:170px;
+        max-width:calc(100vw - 160px);
+    }
+}

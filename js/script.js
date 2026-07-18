@@ -353,7 +353,10 @@ if (topButton) {
 
     });
 
-    topButton.addEventListener("click", () => {
+    topButton.addEventListener("click", (event) => {
+
+        event.preventDefault();
+        event.stopPropagation();
 
         window.scrollTo({
 
@@ -556,11 +559,24 @@ if ("serviceWorker" in navigator) {
 // BUTON INSTALARE PWA
 // ==============================
 
+const isStandalonePwa =
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true;
+
+if (isStandalonePwa) {
+    document.documentElement.classList.add("pwa-standalone");
+}
+
 let deferredInstallPrompt = null;
 const installAppButton = document.getElementById("installAppButton");
 
 window.addEventListener("beforeinstallprompt", function (event) {
     event.preventDefault();
+
+    if (isStandalonePwa) {
+        return;
+    }
+
     deferredInstallPrompt = event;
 
     if (installAppButton) {
@@ -569,7 +585,13 @@ window.addEventListener("beforeinstallprompt", function (event) {
 });
 
 if (installAppButton) {
-    installAppButton.addEventListener("click", async function () {
+    if (isStandalonePwa) {
+        installAppButton.hidden = true;
+    }
+
+    installAppButton.addEventListener("click", async function (event) {
+        event.preventDefault();
+        event.stopPropagation();
         if (!deferredInstallPrompt) {
             return;
         }
