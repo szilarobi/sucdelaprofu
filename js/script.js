@@ -1,28 +1,42 @@
 // ==============================
-// V7.3 — SPLASH SCREEN PWA
+// V8 STABLE — SPLASH SCREEN PWA
 // ==============================
 
 (function () {
     const splash = document.getElementById("appSplash");
+    const root = document.documentElement;
 
-    if (!splash || !document.documentElement.classList.contains("pwa-launch")) {
+    if (!splash || !root.classList.contains("pwa-launch")) {
+        if (splash) {
+            splash.hidden = true;
+            splash.setAttribute("aria-hidden", "true");
+        }
         return;
     }
 
+    splash.hidden = false;
+    splash.setAttribute("aria-hidden", "false");
+
     const startedAt = performance.now();
     const minimumDisplayTime = 1200;
+    let closed = false;
 
     function closeSplash() {
+        if (closed) return;
+        closed = true;
+
         const elapsed = performance.now() - startedAt;
         const remaining = Math.max(0, minimumDisplayTime - elapsed);
 
         window.setTimeout(function () {
             splash.classList.add("isHidden");
-            document.documentElement.classList.remove("pwa-launch");
+            splash.setAttribute("aria-hidden", "true");
+            root.classList.remove("pwa-launch");
 
             window.setTimeout(function () {
-                splash.remove();
-            }, 400);
+                splash.hidden = true;
+                splash.style.display = "none";
+            }, 420);
         }, remaining);
     }
 

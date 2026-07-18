@@ -2414,3 +2414,50 @@ html.pwa-standalone .installAppButton{
         max-width:calc(100vw - 160px);
     }
 }
+
+
+/* ===========================
+   V8 STABLE — FIX OVERLAY-URI INVIZIBILE
+   Elementele ascunse nu mai pot intercepta apăsările pe Sus/Telefon/WhatsApp.
+=========================== */
+.appUpdateNotice[hidden] {
+    display: none !important;
+    pointer-events: none !important;
+}
+
+.appUpdateNotice:not(.visible) {
+    pointer-events: none;
+}
+
+.appUpdateNotice.visible {
+    pointer-events: auto;
+}
+
+.appSplash[hidden] {
+    display: none !important;
+    pointer-events: none !important;
+}
+
+.appSplash {
+    pointer-events: none;
+}
+
+html.pwa-launch .appSplash {
+    pointer-events: auto;
+}
+
+.appSplash.isHidden {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.floatingWhatsapp,
+.floatingPhone,
+#backToTop {
+    position: fixed;
+    z-index: 10060;
+    pointer-events: auto;
+    touch-action: manipulation;
+}
