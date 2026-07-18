@@ -8,74 +8,90 @@ let qtySfecla = 0;
 const pretMere = 40;
 const pretSfecla = 45;
 
+const qtyMereDisplay = document.getElementById("qtyMere");
+const qtySfeclaDisplay = document.getElementById("qtySfecla");
 
-const qtyDisplays = document.querySelectorAll(".qty span");
-const minusButtons = document.querySelectorAll(".qty button:first-child");
-const plusButtons = document.querySelectorAll(".qty button:last-child");
+const minusMere = document.getElementById("minusMere");
+const plusMere = document.getElementById("plusMere");
+
+const minusSfecla = document.getElementById("minusSfecla");
+const plusSfecla = document.getElementById("plusSfecla");
+
+
 
 const totalText = document.querySelector(".cart h1");
-const whatsappButton = document.querySelector(".cart button");
+
 
 // Actualizează totalul
 function updateCart() {
 
-    qtyDisplays[0].textContent = qtyMere;
-    qtyDisplays[1].textContent = qtySfecla;
+    const totalProduse = qtyMere + qtySfecla;
 
-    const total = qtyMere * pretMere + qtySfecla * pretSfecla;
+    const totalPlata =
+        qtyMere * pretMere +
+        qtySfecla * pretSfecla;
 
-    totalText.textContent = total + " RON";
+    // Cantitățile de pe cardurile produselor
+    qtyMereDisplay.textContent = qtyMere;
+    qtySfeclaDisplay.textContent = qtySfecla;
 
+    // Coșul flotant
+    document.getElementById("cartCount").textContent =
+        totalProduse === 1
+            ? "1 produs"
+            : `${totalProduse} produse`;
+
+    document.getElementById("cartValue").textContent =
+        `${totalPlata} lei`;
+
+    // Totalul din formular, dacă există
+    const totalComanda = document.getElementById("totalComanda");
+
+    if (totalComanda) {
+        totalComanda.textContent = `${totalPlata} RON`;
+    }
 }
 
-// Produs 1
 
-minusButtons[0].addEventListener("click", () => {
+//Adaugare cantitati
 
-    if(qtyMere>0){
+minusMere.addEventListener("click", function () {
 
+    if (qtyMere > 0) {
         qtyMere--;
-
         updateCart();
-
     }
 
 });
 
-plusButtons[0].addEventListener("click",()=>{
+plusMere.addEventListener("click", function () {
 
     qtyMere++;
-
     updateCart();
 
 });
 
-// Produs 2
+minusSfecla.addEventListener("click", function () {
 
-minusButtons[1].addEventListener("click",()=>{
-
-    if(qtySfecla>0){
-
+    if (qtySfecla > 0) {
         qtySfecla--;
-
         updateCart();
-
     }
 
 });
 
-plusButtons[1].addEventListener("click",()=>{
+plusSfecla.addEventListener("click", function () {
 
     qtySfecla++;
-
     updateCart();
 
 });
 
 
-function valideazaFormular(){
 
-    let valid = true;
+
+
+function valideazaFormular() {
 
     const nume = document.getElementById("nume");
     const telefon = document.getElementById("telefon");
@@ -86,67 +102,54 @@ function valideazaFormular(){
         camp.classList.remove("error");
     });
 
-    // Nume
-    if(nume.value.trim() === ""){
+    // Verifică mai întâi dacă există produse
+    if (qtyMere === 0 && qtySfecla === 0) {
+
+        alert(
+            "Te rugăm să alegi cel puțin un produs înainte de a trimite comanda."
+        );
+
+        document.getElementById("produse").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+        return false;
+    }
+
+    let valid = true;
+
+    // Validare nume
+    if (nume.value.trim() === "") {
         nume.classList.add("error");
         valid = false;
     }
 
-    // Telefon
+    // Validare telefon
     const telefonCurat = telefon.value.replace(/\s/g, "");
 
-    if(!/^07\d{8}$/.test(telefonCurat)){
+    if (!/^07\d{8}$/.test(telefonCurat)) {
         telefon.classList.add("error");
         valid = false;
     }
 
-    // Adresă
-    if(adresa.value.trim() === ""){
+    // Validare adresă
+    if (adresa.value.trim() === "") {
         adresa.classList.add("error");
         valid = false;
     }
 
-   
+    if (!valid) {
 
+        document.getElementById("comanda").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
 
-    // Cel puțin un produs
-    if(qtyMere === 0 && qtySfecla === 0 ){
-        alert("Te rugăm să alegi cel puțin un produs înainte de a trimite comanda.");
-       // Derulare către secțiunea Produse
-    document.getElementById("produse").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });   
- 
-
-
-    }
-else
-if(!valid){
-        alert("Te rugăm să completezi toate câmpurile obligatorii (Nume, Telefon și Adresă) înainte de a trimite comanda.");
-// Deplasare către formular
-    document.getElementById("comanda").scrollIntoView({
-
-        behavior: "smooth",
-
-        block: "start"
-
-    });
-
-    // Cursor pe primul câmp gol
-    if(nume.value.trim() === ""){
-        nume.focus();
-    }else if(!/^07\d{8}$/.test(telefonCurat)){
-        telefon.focus();
-    }else if(adresa.value.trim() === ""){
-        adresa.focus();
+        return false;
     }
 
-    }
-
-
-    return valid;
-
+    return true;
 }
 
 
@@ -182,26 +185,30 @@ function resetComanda(){
 
 // WhatsApp
 
-whatsappButton.addEventListener("click",()=>{
-if(!valideazaFormular()){
-    return;
-}
+const whatsappButton = document.getElementById("sendOrder");
 
-    const nume=document.getElementById("nume").value;
 
-    const telefon=document.getElementById("telefon").value;
+if (whatsappButton) {
 
-    const adresa=document.getElementById("adresa").value;
+    whatsappButton.addEventListener("click", () => {
 
-    const observatii=document.getElementById("observatii").value;
+        if (!valideazaFormular()) {
+            return;
+        }
 
-    const total=qtyMere*pretMere+qtySfecla*pretSfecla;
+    const nume = document.getElementById("nume").value.trim();
+    const telefon = document.getElementById("telefon").value.trim();
+    const adresa = document.getElementById("adresa").value.trim();
+    const observatii = document.getElementById("observatii").value.trim();
 
-    let mesaj=
+    const total =
+        qtyMere * pretMere +
+        qtySfecla * pretSfecla;
+
+    let mesaj =
 `Bună ziua!
 
 Doresc să comand:
-
 🍎 Suc de mere 5L: ${qtyMere} x ${pretMere} RON
 ❤️ Suc mere + sfeclă: ${qtySfecla} x ${pretSfecla} RON
 
@@ -210,25 +217,41 @@ TOTAL: ${total} RON
 Nume: ${nume}
 Telefon: ${telefon}
 Adresă: ${adresa}
-Observații: ${observatii}`;
+Observații: ${observatii || "-"}`;
 
-document.getElementById("successMessage").style.display="flex";
+    document.getElementById("successMessage").style.display = "flex";
 
-setTimeout(function(){
+    setTimeout(() => {
 
-    window.open(
-        "https://wa.me/40741195757?text="+encodeURIComponent(mesaj),
-        "_blank"
-    );
+        window.open(
+            "https://wa.me/40741195757?text=" +
+            encodeURIComponent(mesaj),
+            "_blank"
+        );
 
-    document.getElementById("successMessage").style.display = "none";
+        document.getElementById("successMessage").style.display = "none";
 
-    resetComanda();
+        resetComanda();
 
-},1500);
-    
+    }, 1500);
 
 });
+
+}
+
+const floatingOrderButton =
+    document.getElementById("floatingOrderButton");
+
+if (floatingOrderButton && whatsappButton) {
+
+    floatingOrderButton.addEventListener("click", function () {
+
+        whatsappButton.click();
+
+    });
+
+}
+
 
 // =======================
 // GALERIE FOTO

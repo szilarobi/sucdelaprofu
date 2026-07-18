@@ -68,12 +68,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       <div class="headerActions">
 
     <a href="#produse" class="headerButton">
-        🛒 Comandă acum
+        🛒 Comandă
     </a>
 
     <a href="tel:+40741195757" class="headerPhone">
         <i class="fa-solid fa-phone"></i>
-        Sună acum<br>0741 195 757
+        Sună<br>0741 195 757
     </a>
 
 </div>
@@ -179,14 +179,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 </p>
 
         <div class="qty">
-
-            <button>-</button>
-
-            <span>0</span>
-
-            <button>+</button>
-
-        </div>
+    <button type="button" id="minusMere">−</button>
+    <span id="qtyMere">0</span>
+    <button type="button" id="plusMere">+</button>
+</div>
 
     </div>
 
@@ -223,14 +219,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 </p>
         <div class="qty">
-
-            <button>-</button>
-
-            <span>0</span>
-
-            <button>+</button>
-
-        </div>
+    <button type="button" id="minusSfecla">−</button>
+    <span id="qtySfecla">0</span>
+    <button type="button" id="plusSfecla">+</button>
+</div>
 
     </div>
 
@@ -270,6 +262,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     id="observatii"
     rows="4"
     placeholder="Ex.: Livrare după ora 17:00 sau alte detalii..."></textarea>
+
+<button
+    id="sendOrder"
+    type="button"
+    class="whatsappOrderBtn"
+>
+    💬 Comandă pe WhatsApp
+</button>
+
 
     </div>
 
@@ -367,19 +368,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 
 
-<section class="cart">
-
-    <h2>Preț total:</h2>
-
-    <h1>0 RON</h1>
-
-    <button>
-
-        Comandă pe WhatsApp
-
-    </button>
-
-</section>
 
 
 <section id="proces">
@@ -584,7 +572,6 @@ Aici producem sucul nostru natural din mere și sfeclă. Pentru prestări servic
 </footer>
 
 
-<script src="js/script.js?v=5"></script>
 <a
 href="https://wa.me/40741195757"
 class="floatingWhatsapp"
@@ -608,41 +595,36 @@ class="floatingPhone">
     ↑
 </button>
 
-<div id="cartPreview">
 
-    <div class="cartHeader">
+<div id="floatingCart">
 
-        <span>🛒 Coșul tău</span>
-
-        <button id="closeCart">✕</button>
-
+    <div class="cartIcon">
+        🛒
     </div>
 
-    <div id="cartItems">
+    <div class="cartInfo">
 
-        Coșul este gol.
-
-    </div>
-
-    <div class="cartFooter">
-
-        <strong>Total:</strong>
-
-        <span id="cartTotal">
-
+        <strong id="cartValue">
             0 lei
+        </strong>
 
+	<span id="cartCount">
+            0 produse
         </span>
 
-        <button id="sendOrder">
-
-            💬 Comandă pe WhatsApp
-
-        </button>
-
     </div>
 
+ <button
+        type="button"
+        id="floatingOrderButton"
+        class="floatingOrderButton">
+        Comandă
+    </button>
+
+
 </div>
+
+
 
 
 <div id="successMessage">
@@ -667,5 +649,6 @@ class="floatingPhone">
 </div>
 
 
+    <script src="js/script.js?v=10"></script>
 </body>
 </html>
