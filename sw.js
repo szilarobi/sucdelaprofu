@@ -1,4 +1,4 @@
-const CACHE_NAME = "suc-de-la-profu-v1";
+const CACHE_NAME = "suc-de-la-profu-v2";
 
 const FILES_TO_CACHE = [
     "./",
@@ -16,8 +16,6 @@ self.addEventListener("install", function (event) {
             return cache.addAll(FILES_TO_CACHE);
         })
     );
-
-    self.skipWaiting();
 });
 
 self.addEventListener("activate", function (event) {
@@ -38,14 +36,54 @@ self.addEventListener("activate", function (event) {
     self.clients.claim();
 });
 
+self.addEventListener("message", function (event) {
+    if (event.data && event.data.type === "SKIP_WAITING") {
+        self.skipWaiting();
+    }
+});
+
 self.addEventListener("fetch", function (event) {
     if (event.request.method !== "GET") {
         return;
     }
 
+    // Pentru paginile HTML folosim rețeaua prima dată, ca utilizatorii
+    // să primească rapid versiunea nouă; cache-ul rămâne rezervă offline.
+    if (event.request.mode === "navigate") {
+        event.respondWith(
+            fetch(event.request)
+                .then(function (response) {
+                    const copy = response.clone();
+                    caches.open(CACHE_NAME).then(function (cache) {
+                        cache.put("./index.html", copy);
+                    });
+                    return response;
+                })
+                .catch(function () {
+                    return caches.match("./index.html");
+                })
+        );
+        return;
+    }
+
+    // Pentru resurse statice: cache imediat, apoi actualizare în fundal.
     event.respondWith(
         caches.match(event.request).then(function (cachedResponse) {
-            return cachedResponse || fetch(event.request);
+            const networkRequest = fetch(event.request)
+                .then(function (response) {
+                    if (response && response.status === 200) {
+                        const copy = response.clone();
+                        caches.open(CACHE_NAME).then(function (cache) {
+                            cache.put(event.request, copy);
+                        });
+                    }
+                    return response;
+                })
+                .catch(function () {
+                    return cachedResponse;
+                });
+
+            return cachedResponse || networkRequest;
         })
     );
 });

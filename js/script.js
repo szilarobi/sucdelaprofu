@@ -421,11 +421,65 @@ updateCart();
 
 
 if ("serviceWorker" in navigator) {
+    const appUpdateNotice = document.getElementById("appUpdateNotice");
+    const updateAppButton = document.getElementById("updateAppButton");
+    const dismissUpdateButton = document.getElementById("dismissUpdateButton");
+    let waitingServiceWorker = null;
+    let reloadingForUpdate = false;
+
+    function showUpdateNotice(worker) {
+        waitingServiceWorker = worker;
+
+        if (appUpdateNotice) {
+            appUpdateNotice.hidden = false;
+            requestAnimationFrame(function () {
+                appUpdateNotice.classList.add("visible");
+            });
+        }
+    }
+
+    function hideUpdateNotice() {
+        if (!appUpdateNotice) {
+            return;
+        }
+
+        appUpdateNotice.classList.remove("visible");
+        window.setTimeout(function () {
+            appUpdateNotice.hidden = true;
+        }, 250);
+    }
+
     window.addEventListener("load", function () {
         navigator.serviceWorker
             .register("./sw.js")
-            .then(function () {
+            .then(function (registration) {
                 console.log("PWA Service Worker înregistrat.");
+
+                if (registration.waiting) {
+                    showUpdateNotice(registration.waiting);
+                }
+
+                registration.addEventListener("updatefound", function () {
+                    const installingWorker = registration.installing;
+
+                    if (!installingWorker) {
+                        return;
+                    }
+
+                    installingWorker.addEventListener("statechange", function () {
+                        if (
+                            installingWorker.state === "installed" &&
+                            navigator.serviceWorker.controller
+                        ) {
+                            showUpdateNotice(installingWorker);
+                        }
+                    });
+                });
+
+                // Verifică periodic dacă ai publicat o versiune nouă.
+                window.setInterval(function () {
+                    registration.update();
+                }, 60 * 60 * 1000);
             })
             .catch(function (error) {
                 console.error(
@@ -433,6 +487,32 @@ if ("serviceWorker" in navigator) {
                     error
                 );
             });
+    });
+
+    if (updateAppButton) {
+        updateAppButton.addEventListener("click", function () {
+            if (!waitingServiceWorker) {
+                window.location.reload();
+                return;
+            }
+
+            updateAppButton.disabled = true;
+            updateAppButton.textContent = "Se actualizează…";
+            waitingServiceWorker.postMessage({ type: "SKIP_WAITING" });
+        });
+    }
+
+    if (dismissUpdateButton) {
+        dismissUpdateButton.addEventListener("click", hideUpdateNotice);
+    }
+
+    navigator.serviceWorker.addEventListener("controllerchange", function () {
+        if (reloadingForUpdate) {
+            return;
+        }
+
+        reloadingForUpdate = true;
+        window.location.reload();
     });
 }
 
