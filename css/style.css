@@ -83,6 +83,8 @@ body{
 }
 
 
+
+
 /* ==========================
    HEADER
 ========================== */
@@ -128,7 +130,7 @@ header .container{
 
 .logo img{
 
-    height:150px;
+    height:100px;
 
 }
 
@@ -388,6 +390,9 @@ nav a:hover{
 
     padding:70px 20px;
 
+ scroll-margin-top:100px;
+
+
 }
 
 #produse h2{
@@ -620,7 +625,7 @@ nav a:hover{
     }
 
     .logo{
-        width:150px;
+        width:100px;
     }
 
     #menuToggle{
@@ -658,6 +663,8 @@ nav a:hover{
     margin:auto;
 
     padding:60px 20px;
+
+ scroll-margin-top:100px;
 
 }
 
@@ -1123,6 +1130,8 @@ padding:90px 20px;
 
 background:#f7faf7;
 
+ scroll-margin-top:100px;
+
 }
 
 #galerie h2{
@@ -1247,6 +1256,8 @@ cursor:pointer;
     padding:90px 20px;
 
     background:#ffffff;
+
+ scroll-margin-top:100px;
 
 }
 
