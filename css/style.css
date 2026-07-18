@@ -1488,38 +1488,29 @@ color:#ddd;
 
 #backToTop{
 
-position:fixed;
+    position:fixed;
 
-bottom:25px;
+    left:15px;
 
-left:25px;
+    bottom:120px;
 
-width:55px;
+    width:55px;
+    height:55px;
 
-height:55px;
+    border:none;
+    border-radius:50%;
 
-border:none;
+    background:#1b5e20;
 
-border-radius:50%;
+    color:white;
 
-background:#1b5e20;
+    font-size:24px;
 
-color:white;
+    cursor:pointer;
 
-font-size:24px;
-
-cursor:pointer;
-
-display:none;
-
-box-shadow:0 10px 25px rgba(0,0,0,.25);
-
-transition:.3s;
-
-z-index:9999;
+    z-index:9999;
 
 }
-
 #backToTop:hover{
 
 transform:translateY(-5px);
@@ -2156,7 +2147,7 @@ background:#2e7d32;
 
     #backToTop{
         left:15px;
-        bottom:15px;
+        bottom:105px;
         width:50px;
         height:50px;
     }
