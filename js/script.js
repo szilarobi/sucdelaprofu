@@ -106,11 +106,37 @@ function valideazaFormular(){
         valid = false;
     }
 
+   
+
+
     // Cel puțin un produs
     if(qtyMere === 0 && qtySfecla === 0 ){
         alert("Te rugăm să alegi cel puțin un produs înainte de a trimite comanda.");
         valid = false;
     }
+else
+if(!valid){
+        alert("Te rugăm să completezi toate câmpurile obligatorii (Nume, Telefon și Adresă) înainte de a trimite comanda.");
+// Deplasare către formular
+    document.getElementById("comanda").scrollIntoView({
+
+        behavior: "smooth",
+
+        block: "start"
+
+    });
+
+    // Cursor pe primul câmp gol
+    if(nume.value.trim() === ""){
+        nume.focus();
+    }else if(!/^07\d{8}$/.test(telefonCurat)){
+        telefon.focus();
+    }else if(adresa.value.trim() === ""){
+        adresa.focus();
+    }
+
+    }
+
 
     return valid;
 
