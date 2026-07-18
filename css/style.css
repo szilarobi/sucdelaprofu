@@ -23,7 +23,7 @@
 
     --shadow:0 10px 35px rgba(0,0,0,.08);
     --shadow-hover:0 18px 40px rgba(0,0,0,.12);
-
+ 
     --transition:all .35s ease;
 
     --max-width:1200px;
@@ -2062,11 +2062,11 @@ background:#2e7d32;
     }
 
     .heroLeft h1{
-        font-size:42px;
+        font-size:38px;
     }
 
     .heroLeft h2{
-        font-size:26px;
+        font-size:24px;
     }
 
     /* GRIDURI */
