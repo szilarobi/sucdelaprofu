@@ -112,7 +112,14 @@ function valideazaFormular(){
     // Cel puțin un produs
     if(qtyMere === 0 && qtySfecla === 0 ){
         alert("Te rugăm să alegi cel puțin un produs înainte de a trimite comanda.");
-        valid = false;
+       // Derulare către secțiunea Produse
+    document.getElementById("produse").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });   
+ 
+
+
     }
 else
 if(!valid){
@@ -139,6 +146,35 @@ if(!valid){
 
 
     return valid;
+
+}
+
+
+function resetComanda(){
+
+    // Reset cantități
+    qtyMere = 0;
+    qtySfecla = 0;
+
+    // Actualizează totalul și cantitățile afișate
+    updateCart();
+
+    // Golește formularul
+    document.getElementById("nume").value = "";
+    document.getElementById("telefon").value = "";
+    document.getElementById("adresa").value = "";
+    document.getElementById("observatii").value = "";
+
+    // Elimină eventualele marcaje de eroare
+    document.querySelectorAll(".error").forEach(camp=>{
+        camp.classList.remove("error");
+    });
+
+     // Revine la începutul formularului
+    document.getElementById("produse").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 
 }
 
@@ -185,11 +221,11 @@ setTimeout(function(){
         "_blank"
     );
 
-    document.getElementById("successMessage").style.display="none";
+    document.getElementById("successMessage").style.display = "none";
+
+    resetComanda();
 
 },1500);
-
-
     
 
 });
