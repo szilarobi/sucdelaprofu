@@ -7,7 +7,7 @@
  * - Curățare automată a cache-urilor vechi și limitarea imaginilor salvate
  */
 
-const VERSION = "v8.0.0";
+const VERSION = "v8.2.0-firebase";
 const STATIC_CACHE = `profu-static-${VERSION}`;
 const PAGES_CACHE = `profu-pages-${VERSION}`;
 const IMAGES_CACHE = `profu-images-${VERSION}`;
@@ -16,8 +16,10 @@ const FONTS_CACHE = `profu-fonts-${VERSION}`;
 const APP_SHELL = [
     "./",
     "./index.html",
+    "./recenzii.html",
     "./css/style.css",
     "./js/script.js",
+    "./js/reviews.js",
     "./manifest.webmanifest",
     "./icons/icon-192.png",
     "./icons/icon-512.png",

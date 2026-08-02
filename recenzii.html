@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Lasă o recenzie | Suc de la Profu' – Aiud</title>
+    <meta name="description" content="Spune-ne părerea ta despre Suc de la Profu'. Completează formularul și trimite recenzia pentru verificare și publicare.">
+    <link rel="canonical" href="https://sucdelaprofu.ro/recenzii.html">
+
+    <meta property="og:title" content="Lasă o recenzie | Suc de la Profu'">
+    <meta property="og:description" content="Părerea ta ne ajută să devenim mai buni. Trimite-ne o recenzie.">
+    <meta property="og:url" content="https://sucdelaprofu.ro/recenzii.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://sucdelaprofu.ro/assets/logo.png">
+
+    <meta name="theme-color" content="#1b5e20">
+    <link rel="icon" type="image/png" href="assets/logo2.png">
+    <link rel="stylesheet" href="css/style.css?v=10">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body class="reviewPage">
+
+<header id="header">
+    <div class="container">
+        <a href="index.html" class="logo">
+            <img src="assets/logo.png" alt="Suc de la Profu'">
+        </a>
+
+        <nav id="nav">
+            <a href="index.html">Acasă</a>
+            <a href="index.html#produse">Produse</a>
+            <a href="index.html#galerie">Galerie</a>
+            <a href="recenzii.html" aria-current="page">Recenzii</a>
+            <a href="index.html#locatii">Locații</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+
+        <div class="headerActions">
+            <a href="index.html#produse" class="headerButton">🛒 Comandă</a>
+            <a href="tel:+40741195757" class="headerPhone">
+                <i class="fa-solid fa-phone"></i>
+                Sună<br>0741 195 757
+            </a>
+        </div>
+
+        <button id="menuToggle" type="button" aria-label="Deschide meniul">☰</button>
+    </div>
+</header>
+
+<main class="reviewMain">
+    <section class="reviewHero">
+        <span class="heroBadge">⭐ Părerea ta contează</span>
+        <h1>Lasă-ne o recenzie</h1>
+        <p>
+            Spune-ne cum ți s-a părut sucul și experiența de comandă. Recenzia ta va fi publicată automat pe această pagină.
+        </p>
+    </section>
+
+    <section class="reviewFormSection" aria-labelledby="reviewFormTitle">
+        <div class="reviewFormCard">
+            <h2 id="reviewFormTitle">Completează recenzia</h2>
+
+            <form id="reviewForm" class="reviewForm" novalidate>
+                <div class="reviewField">
+                    <label for="reviewName">Nume și prenume *</label>
+                    <input id="reviewName" name="name" type="text" autocomplete="name" maxlength="60" placeholder="Ex: Ion Popescu" required>
+                </div>
+
+                <div class="reviewField">
+                    <label for="reviewLocality">Localitatea</label>
+                    <input id="reviewLocality" name="city" type="text" autocomplete="address-level2" maxlength="60" placeholder="Ex: Aiud">
+                </div>
+
+                <fieldset class="ratingField">
+                    <legend>Nota acordată *</legend>
+                    <div class="starRating" role="radiogroup" aria-label="Nota acordată">
+                        <input type="radio" id="star5" name="rating" value="5" required>
+                        <label for="star5" title="5 stele">★</label>
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4" title="4 stele">★</label>
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3" title="3 stele">★</label>
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2" title="2 stele">★</label>
+                        <input type="radio" id="star1" name="rating" value="1">
+                        <label for="star1" title="1 stea">★</label>
+                    </div>
+                </fieldset>
+
+                <div class="reviewField">
+                    <label for="reviewText">Recenzia ta *</label>
+                    <textarea id="reviewText" name="review" rows="6" minlength="10" maxlength="700" placeholder="Scrie aici experiența ta..." required></textarea>
+                    <div class="reviewCounter"><span id="reviewCharCount">0</span>/700 caractere</div>
+                </div>
+
+                <label class="reviewConsent">
+                    <input id="reviewConsent" type="checkbox" required>
+                    <span>Sunt de acord ca numele, localitatea, nota și textul recenziei să fie folosite pentru publicarea recenziei pe site. *</span>
+                </label>
+
+                <p id="reviewError" class="reviewError" role="alert" hidden></p>
+
+                <div class="reviewField reviewHoneypot" aria-hidden="true">
+                    <label for="reviewWebsite">Website</label>
+                    <input id="reviewWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
+                </div>
+
+                <button type="submit" class="reviewSubmitButton" id="reviewSubmitButton">
+                    <i class="fa-solid fa-star" aria-hidden="true"></i>
+                    Publică recenzia
+                </button>
+
+                <p class="reviewPrivacyNote">
+                    Nu solicităm CNP, adresă completă sau alte date sensibile. Recenzia este publicată automat după trimitere.
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <section class="publishedReviewsSection" aria-labelledby="publishedReviewsTitle">
+        <div class="reviewsSummaryCard">
+            <div>
+                <span class="reviewsSummaryLabel">Evaluarea clienților</span>
+                <strong id="reviewsAverage" class="reviewsAverage">—</strong>
+                <div id="reviewsAverageStars" class="reviewsAverageStars" aria-label="Media evaluărilor">☆☆☆☆☆</div>
+            </div>
+            <div class="reviewsCountBox">
+                <strong id="reviewsCount">0</strong>
+                <span>recenzii publicate</span>
+            </div>
+        </div>
+
+        <div class="publishedReviewsHeader">
+            <h2 id="publishedReviewsTitle">Recenziile clienților</h2>
+            <select id="reviewsSort" class="reviewsSort" aria-label="Sortează recenziile">
+                <option value="newest">Cele mai noi</option>
+                <option value="highest">Nota cea mai mare</option>
+                <option value="lowest">Nota cea mai mică</option>
+            </select>
+        </div>
+
+        <p id="reviewsLoading" class="reviewsLoading">Se încarcă recenziile…</p>
+        <p id="reviewsEmpty" class="reviewsEmpty" hidden>Nu există încă recenzii. Fii primul client care își spune părerea!</p>
+        <p id="reviewsLoadError" class="reviewError" hidden>Recenziile nu au putut fi încărcate. Te rugăm să încerci din nou.</p>
+        <div id="reviewsList" class="publishedReviewsGrid" aria-live="polite"></div>
+    </section>
+
+</main>
+
+<footer id="contact">
+    <div class="footerContainer">
+        <div class="footerLogo">
+            <img src="assets/logo.png" alt="Suc de la Profu'">
+            <h3>Suc de la Profu'</h3>
+            <p>Un suc de nota 10!</p>
+        </div>
+        <div class="footerContact">
+            <h3>Contact</h3>
+            <p><a href="tel:+40741195757"><i class="fa-solid fa-phone"></i> 0741 195 757</a></p>
+            <p><a href="https://wa.me/40741195757"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a></p>
+        </div>
+        <div class="footerInfo">
+            <h3>Informații</h3>
+            <p>Lopadea Nouă – Aiud, județul Alba</p>
+            <p>Recenziile clienților sunt publicate automat.</p>
+        </div>
+    </div>
+    <div class="copyright">© 2026 Suc de la Profu'. Toate drepturile rezervate.</div>
+</footer>
+
+<a class="floatingPhone" href="tel:+40741195757" aria-label="Sună acum"><i class="fa-solid fa-phone"></i></a>
+<a class="floatingWhatsapp" href="https://wa.me/40741195757" aria-label="Scrie pe WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+<button id="backToTop" type="button" title="Sus" aria-label="Mergi sus">↑</button>
+
+<div id="reviewSuccess" class="reviewSuccess" hidden>
+    <div class="reviewSuccessBox">
+        <div class="successIcon">✅</div>
+        <h2>Mulțumim!</h2>
+        <p>Recenzia ta a fost publicată pe pagină.</p>
+    </div>
+</div>
+
+<script type="module" src="js/reviews.js?v=2"></script>
+</body>
+</html>
