@@ -1,5 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import {
+    initializeAppCheck,
+    ReCaptchaEnterpriseProvider
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app-check.js";
+import {
     getFirestore,
     collection,
     addDoc,
@@ -19,6 +23,16 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
+// Firebase App Check protejează Firestore împotriva cererilor automate
+// venite din afara site-ului autorizat. Tokenul este reînnoit automat.
+initializeAppCheck(app, {
+    provider: new ReCaptchaEnterpriseProvider(
+        "6Leg3XEtAAAAAKM85IeSPBREJi84MM8jBytjd0E1"
+    ),
+    isTokenAutoRefreshEnabled: true
+});
+
 const db = getFirestore(app);
 const reviewsCollection = collection(db, "reviews");
 
