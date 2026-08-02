@@ -1,5 +1,5 @@
 /*
- * Suc de la Profu' – PWA V8.3.1 App Check Stable
+ * Suc de la Profu' – PWA V8.3.2 App Check Mobile Fix
  * Cache inteligent:
  * - HTML: Network First (conținut mereu proaspăt, cu rezervă offline)
  * - CSS/JS: Stale While Revalidate (încărcare rapidă + actualizare în fundal)
@@ -7,7 +7,7 @@
  * - Curățare automată a cache-urilor vechi și limitarea imaginilor salvate
  */
 
-const VERSION = "v8.3.1-app-check-stable";
+const VERSION = "v8.3.2-app-check-mobile-fix";
 const STATIC_CACHE = `profu-static-${VERSION}`;
 const PAGES_CACHE = `profu-pages-${VERSION}`;
 const IMAGES_CACHE = `profu-images-${VERSION}`;
@@ -96,8 +96,14 @@ self.addEventListener("fetch", event => {
         return;
     }
 
-    // 2. CSS și JavaScript: răspuns imediat din cache, actualizare în fundal.
-    if (request.destination === "style" || request.destination === "script") {
+    // 2. JavaScript: rețeaua are prioritate pentru a evita rularea unei versiuni vechi.
+    if (request.destination === "script") {
+        event.respondWith(networkFirst(request, STATIC_CACHE));
+        return;
+    }
+
+    // CSS: răspuns rapid din cache, actualizare în fundal.
+    if (request.destination === "style") {
         event.respondWith(staleWhileRevalidate(request, STATIC_CACHE));
         return;
     }
