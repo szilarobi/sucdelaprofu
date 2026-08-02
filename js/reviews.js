@@ -30,7 +30,7 @@ const app = initializeApp(firebaseConfig);
 // tokenul App Check cererilor Firestore, conform fluxului recomandat Firebase.
 const appCheck = initializeAppCheck(app, {
     provider: new ReCaptchaEnterpriseProvider(
-        "6Leg3XEtAAAAAKM85IeSPBREJi84MM8jBytjd0E1"
+        "6LekJXItAAAAAGbgfG1LykDP743qxSaofMFDOMyR"
     ),
     isTokenAutoRefreshEnabled: true
 });
