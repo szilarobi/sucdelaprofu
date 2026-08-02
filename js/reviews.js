@@ -1,8 +1,9 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 import {
     initializeAppCheck,
-    ReCaptchaEnterpriseProvider
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app-check.js";
+    ReCaptchaEnterpriseProvider,
+    getToken
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app-check.js";
 import {
     getFirestore,
     collection,
@@ -11,7 +12,7 @@ import {
     query,
     orderBy,
     onSnapshot
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBsmt9o-g0QrKSfN6XJzJz8u2NRwfV2PE",
@@ -24,21 +25,31 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-// Firebase App Check protejează Firestore împotriva cererilor automate
-// venite din afara site-ului autorizat. Tokenul este reînnoit automat.
-initializeAppCheck(app, {
+// App Check trebuie inițializat și validat ÎNAINTE de prima cerere Firestore.
+const appCheck = initializeAppCheck(app, {
     provider: new ReCaptchaEnterpriseProvider(
         "6Leg3XEtAAAAAKM85IeSPBREJi84MM8jBytjd0E1"
     ),
     isTokenAutoRefreshEnabled: true
 });
 
-const db = getFirestore(app);
-const reviewsCollection = collection(db, "reviews");
-
+let db = null;
+let reviewsCollection = null;
 let loadedReviews = [];
 
-document.addEventListener("DOMContentLoaded", () => {
+window.__profuFirebaseDiagnostics = {
+    sdkVersion: "12.16.0",
+    appInitialized: true,
+    appCheckInitialized: true,
+    appCheckTokenReceived: false,
+    firestoreInitialized: false,
+    lastError: null
+};
+
+console.info("✓ Firebase initialized");
+console.info("✓ App Check initialized");
+
+document.addEventListener("DOMContentLoaded", async () => {
     const form = document.getElementById("reviewForm");
     const reviewText = document.getElementById("reviewText");
     const charCount = document.getElementById("reviewCharCount");
@@ -51,6 +62,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const nav = document.getElementById("nav");
     const header = document.getElementById("header");
     const topButton = document.getElementById("backToTop");
+
+    const appCheckReady = await initializeProtectedFirestore();
+    if (!appCheckReady) {
+        if (errorBox) {
+            errorBox.textContent = "Conexiunea securizată nu a putut fi inițializată. Reîncarcă pagina și încearcă din nou.";
+            errorBox.hidden = false;
+        }
+        if (submitButton) submitButton.disabled = true;
+        const loading = document.getElementById("reviewsLoading");
+        const loadError = document.getElementById("reviewsLoadError");
+        if (loading) loading.hidden = true;
+        if (loadError) loadError.hidden = false;
+        initializeNavigation(menuToggle, nav, header, topButton);
+        return;
+    }
 
     if (reviewText && charCount) {
         reviewText.addEventListener("input", () => {
@@ -133,6 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setSubmitting(true, submitButton);
 
             try {
+                await getToken(appCheck, false);
                 await addDoc(reviewsCollection, {
                     name: cleanName,
                     city: cleanCity,
@@ -168,6 +195,35 @@ document.addEventListener("DOMContentLoaded", () => {
     subscribeToReviews();
     initializeNavigation(menuToggle, nav, header, topButton);
 });
+
+async function initializeProtectedFirestore() {
+    try {
+        // Forțăm primul token pentru a elimina cursa dintre App Check și Firestore.
+        const tokenResult = await getToken(appCheck, true);
+
+        if (!tokenResult?.token) {
+            throw new Error("App Check nu a returnat un token.");
+        }
+
+        window.__profuFirebaseDiagnostics.appCheckTokenReceived = true;
+        console.info("✓ App Check token received", {
+            tokenLength: tokenResult.token.length
+        });
+
+        db = getFirestore(app);
+        reviewsCollection = collection(db, "reviews");
+        window.__profuFirebaseDiagnostics.firestoreInitialized = true;
+        console.info("✓ Firestore connected");
+        return true;
+    } catch (error) {
+        window.__profuFirebaseDiagnostics.lastError = {
+            code: error?.code || "unknown",
+            message: error?.message || String(error)
+        };
+        console.error("✗ App Check token error:", error);
+        return false;
+    }
+}
 
 function subscribeToReviews() {
     const loading = document.getElementById("reviewsLoading");

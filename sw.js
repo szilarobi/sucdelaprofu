@@ -1,5 +1,5 @@
 /*
- * Suc de la Profu' – PWA V8.3 App Check
+ * Suc de la Profu' – PWA V8.3.1 App Check Stable
  * Cache inteligent:
  * - HTML: Network First (conținut mereu proaspăt, cu rezervă offline)
  * - CSS/JS: Stale While Revalidate (încărcare rapidă + actualizare în fundal)
@@ -7,7 +7,7 @@
  * - Curățare automată a cache-urilor vechi și limitarea imaginilor salvate
  */
 
-const VERSION = "v8.3.0-app-check";
+const VERSION = "v8.3.1-app-check-stable";
 const STATIC_CACHE = `profu-static-${VERSION}`;
 const PAGES_CACHE = `profu-pages-${VERSION}`;
 const IMAGES_CACHE = `profu-images-${VERSION}`;
@@ -71,8 +71,22 @@ self.addEventListener("fetch", event => {
 
     const url = new URL(request.url);
 
-    // Nu interceptăm scheme speciale și hărțile Google încorporate.
-    if (!url.protocol.startsWith("http") || url.hostname.includes("google.com")) {
+    // Nu interceptăm serviciile Firebase / Google / reCAPTCHA.
+    // Tokenurile App Check și SDK-urile trebuie obținute direct din rețea.
+    const bypassHosts = [
+        "google.com",
+        "gstatic.com",
+        "googleapis.com",
+        "firebaseio.com",
+        "firebaseapp.com",
+        "firebasestorage.app",
+        "recaptcha.net"
+    ];
+
+    if (
+        !url.protocol.startsWith("http") ||
+        bypassHosts.some(host => url.hostname === host || url.hostname.endsWith(`.${host}`))
+    ) {
         return;
     }
 
