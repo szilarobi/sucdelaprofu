@@ -15,7 +15,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBsmt9o-g0QrKSfN6XJzJz8u2NRwfV2PE",
+    apiKey: "AIzaSyBsmt9o_g0QrKSfN6XJzJz8u2NRwfV2PE",
     authDomain: "suc-de-la-profu.firebaseapp.com",
     projectId: "suc-de-la-profu",
     storageBucket: "suc-de-la-profu.firebasestorage.app",
