@@ -1,5 +1,5 @@
 /*
- * Suc de la Profu' – PWA V8 Stable
+ * Suc de la Profu' – PWA V8.3 App Check
  * Cache inteligent:
  * - HTML: Network First (conținut mereu proaspăt, cu rezervă offline)
  * - CSS/JS: Stale While Revalidate (încărcare rapidă + actualizare în fundal)
@@ -7,7 +7,7 @@
  * - Curățare automată a cache-urilor vechi și limitarea imaginilor salvate
  */
 
-const VERSION = "v8.2.0-firebase";
+const VERSION = "v8.3.0-app-check";
 const STATIC_CACHE = `profu-static-${VERSION}`;
 const PAGES_CACHE = `profu-pages-${VERSION}`;
 const IMAGES_CACHE = `profu-images-${VERSION}`;
