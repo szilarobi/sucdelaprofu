@@ -943,10 +943,8 @@ transform:scale(1.12);
 .card img{
 
     height:280px;
-	width: 65% 
-	align-items:center;
-
-    object-fit:cover;
+	width: 65%; 
+	object-fit:cover;
 
 }
 
