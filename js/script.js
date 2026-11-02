@@ -55,8 +55,8 @@
 let qtyMere = 0;
 let qtySfecla = 0;
 
-const pretMere = 40;
-const pretSfecla = 45;
+const pretMere = 27;
+const pretSfecla = 30;
 
 const qtyMereDisplay = document.getElementById("qtyMere");
 const qtySfeclaDisplay = document.getElementById("qtySfecla");
@@ -259,8 +259,8 @@ if (whatsappButton) {
 `Bună ziua!
 
 Doresc să comand:
-🍎 Suc de mere 5L: ${qtyMere} x ${pretMere} RON
-❤️ Suc mere + sfeclă: ${qtySfecla} x ${pretSfecla} RON
+🍎 Suc de mere 3L: ${qtyMere} x ${pretMere} RON
+❤️ Suc mere cu sfeclă 3L: ${qtySfecla} x ${pretSfecla} RON
 
 TOTAL: ${total} RON
 -------------------------
